@@ -1,0 +1,49 @@
+{
+    "name": "global-api",
+    "version": "1.0.0",
+    "description": "Global API ",
+    "main": "index.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jordkris/global-api.git"
+    },
+    "keywords": [],
+    "author": "Jordy Kristianata",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jordkris/global-api/issues"
+    },
+    "homepage": "https://github.com/jordkris/global-api#readme",
+    "dependencies": {
+        "@sentry/node": "^7.16.0",
+        "@sentry/tracing": "^7.16.0",
+        "axios": "^1.2.6",
+        "body-parser": "^1.20.0",
+        "connect-flash": "^0.1.1",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "decode-uri-component": "^0.2.0",
+        "dotenv": "^16.0.1",
+        "ejs": "^3.1.6",
+        "express": "^4.17.1",
+        "express-session": "^1.17.3",
+        "forever": "^0.14.2",
+        "fs": "^0.0.1-security",
+        "http": "^0.0.1-security",
+        "https": "^1.0.0",
+        "jquery": "^3.6.0",
+        "jsonfile": "^6.1.0",
+        "local-storage": "^2.0.0",
+        "nodemon": "^2.0.16",
+        "path": "^0.12.7",
+        "process": "^0.11.10"
+    },
+    "devDependencies": {
+        "open-cli": "^7.1.0"
+    }
+}
