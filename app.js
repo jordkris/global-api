@@ -34,26 +34,14 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 // app.use(methodOverride("_method"));
 
-// set views path
-app.set("views", './views');
-app.set('view engine', 'ejs');
-
-// app.get('/', (req, res) => {
-//     res.render('home/index.ejs');
-// });
-
-// declare connection to db connection
-let con = require("./config/database.js");
-// connect route to database
+app.set('json spaces', 2);
 app.use((req, res, next) => {
-    req.con = con;
+
     return next();
 });
 
 // include router
-const webRouter = require("./routes/webRouter");
 const apiRouter = require("./routes/apiRouter");
-app.use("/", webRouter);
 app.use("/api", apiRouter);
 
 // start server
