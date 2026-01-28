@@ -27,10 +27,19 @@ module.exports={
                 }
             );
 
-            res.json({
-                success: true,
-                data: response.data,
-            });
+            if (response.data.errors.username) {
+
+                res.json({
+                    success: false,
+                    message: response.data.errors.username[0].message,
+                });
+            } else {
+                res.json({
+                    success: true,
+                    data: 'This username is available'
+                });
+            }
+
 
         } catch (err) {
             res.status(500).json({
