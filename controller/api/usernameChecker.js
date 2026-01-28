@@ -1,10 +1,18 @@
 const axios=require("axios");
 const FormData=require("form-data");
 
+// get cookie
+let getInstagramCookie=async () => {
+    let data=await axios.get("https://www.instagram.com/");
+    let responseHeaders=data.headers;
+    return responseHeaders['set-cookie'][0].split(';')[0].split('=')[1];
+}
+
 module.exports={
     check: async (req, res) => {
         let { username }=req.body;
         try {
+            let csrfToken=getInstagramCookie();
             const form=new FormData();
             form.append("username", username);
             const response=await axios.post(
@@ -13,7 +21,7 @@ module.exports={
                 {
                     headers: {
                         ...form.getHeaders(),
-                        'X-CSRFToken': process.env.CSRF_TOKEN
+                        'X-CSRFToken': csrfToken
                     },
                     timeout: 8000,
                 }
