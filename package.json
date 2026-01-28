@@ -4,9 +4,9 @@
     "description": "Global API ",
     "main": "index.js",
     "scripts": {
-        "build": "netlify deploy --prod",
+        "deploy": "netlify deploy --prod",
         "start": "node app.js",
-        "dev": "nodemon app.js",
+        "dev": "nodemon local-server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

@@ -1,7 +1,6 @@
 // all important modules
 const process = require('process');
 const express = require('express');
-const serverless = require('serverless-http');
 const app = express();
 // const path = require("path");
 // const bodyParser = require('body-parser');
@@ -36,6 +35,10 @@ require('dotenv').config();
 // app.use(methodOverride("_method"));
 
 app.set('json spaces', 2);
+// parse JSON and URL-encoded bodies (needed so `req.body` is populated)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use((req, res, next) => {
     return next();
 });
@@ -51,4 +54,5 @@ app.use("/api", apiRouter);
 // });
 
 // start server with serverless
-module.exports.handler = serverless(app);
+
+module.exports = app;
