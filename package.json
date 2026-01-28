@@ -4,7 +4,7 @@
     "description": "Global API ",
     "main": "index.js",
     "scripts": {
-        "deploy": "netlify deploy --prod",
+        "deploy": "git add . && git commit -m \"${npm_config_message:-Auto commit}\" && git push",
         "start": "node app.js",
         "dev": "nodemon local-server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
