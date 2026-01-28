@@ -9,7 +9,7 @@ let getInstagramCookie=async () => {
 }
 
 module.exports={
-    check: async (req, res) => {
+    instagram: async (req, res) => {
         let { username }=req.body;
         try {
             let csrfToken=getInstagramCookie();
