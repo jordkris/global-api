@@ -13,7 +13,7 @@ module.exports={
                 {
                     headers: {
                         ...form.getHeaders(),
-                        'X-CSRFToken': ''
+                        'X-CSRFToken': process.env.CSRF_TOKEN
                     },
                     timeout: 8000,
                 }
