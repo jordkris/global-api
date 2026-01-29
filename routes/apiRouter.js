@@ -10,4 +10,5 @@ const usernameChecker = require("../controller/api/usernameChecker.js");
 // implementation
 // router.post("/pages/updatePageContent/:id", middleware.verifyToken, pages.updatePageContent);
 router.post("/usernameChecker/instagram", usernameChecker.instagram);
+router.post("/usernameChecker/getAllPossibleAlpha", usernameChecker.getAllPossibleAlpha);
 module.exports = router;
