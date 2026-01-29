@@ -9,6 +9,46 @@ let getInstagramCookie=async () => {
 }
 
 module.exports={
+    getAllPossibleAlpha: (req, res) => {
+        try {
+            let { minLetters, maxLetters }=req.body;
+
+            if (minLetters<1||maxLetters<minLetters) {
+                throw new Error('Invalid minLetters / maxLetters');
+            }
+
+            const possibleLetter='._0123456789abcdefghijklmnopqrstuvwxyz';
+            const base=possibleLetter.length;
+            const result=[];
+
+            for (let length=minLetters; length<=maxLetters; length++) {
+                const max=Math.pow(base, length);
+
+                for (let i=0; i<max; i++) {
+                    let n=i;
+                    let str='';
+
+                    while (n>0) {
+                        str=possibleLetter[n%base]+str;
+                        n=Math.floor(n/base);
+                    }
+
+                    // pad with first character to ensure fixed length
+                    str=str.padStart(length, possibleLetter[0]);
+                    result.push(str);
+                }
+            }
+            res.json({
+                success: true,
+                data: result
+            });
+        } catch (err) {
+            res.status(500).json({
+                success: false,
+                error: err.response?.data||err.message,
+            });
+        }
+    },
     instagram: async (req, res) => {
         let { username }=req.body;
         try {
@@ -36,7 +76,7 @@ module.exports={
             } else {
                 res.json({
                     success: true,
-                    data: 'This username is available'
+                    message: 'This username is available'
                 });
             }
 
