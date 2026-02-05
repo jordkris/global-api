@@ -32,12 +32,14 @@ module.exports={
                 res.json({
                     status: 200,
                     success: false,
+                    username: username,
                     message: response.data.errors.username[0].message,
                 });
             } else {
                 res.json({
                     status: 200,
                     success: true,
+                    username: username,
                     message: 'This username is available'
                 });
             }
@@ -47,6 +49,7 @@ module.exports={
             res.json({
                 status: 500,
                 success: false,
+                username: username,
                 error: err.response?.data||err.message,
             });
         }
