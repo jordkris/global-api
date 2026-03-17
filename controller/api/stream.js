@@ -39,7 +39,7 @@ module.exports={
             stream.data.pipe(res);
         } catch (err) {
             console.error(err.message);
-            res.status(500).send("Stream error");
+            res.status(500).send("Stream error : "+err.message);
         }
     }
 }
