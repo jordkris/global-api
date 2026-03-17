@@ -6,8 +6,10 @@ const router = express.Router();
 
 // import controller
 const usernameChecker = require("../controller/api/usernameChecker.js");
+const stream = require("../controller/api/stream.js");
 
 // implementation
 // router.post("/pages/updatePageContent/:id", middleware.verifyToken, pages.updatePageContent);
 router.post("/usernameChecker/instagram", usernameChecker.instagram);
+router.get("/stream/get", stream.get);
 module.exports = router;
