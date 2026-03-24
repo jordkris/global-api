@@ -1,24 +1,24 @@
-const axios=require("axios");
+const axios = require("axios");
 
-module.exports={
-    get: async (req, res) => {
+module.exports = {
+    get: async(req, res) => {
         try {
-            const src=req.query.src;
+            const src = req.query.src;
             if (!src) {
                 return res.status(400).send("Missing src parameter");
             }
-            const parsedUrl=new URL(src);
-            const basePath=parsedUrl.origin+parsedUrl.pathname.replace(/[^/]+$/, "");
+            const parsedUrl = new URL(src);
+            const basePath = parsedUrl.origin + parsedUrl.pathname.replace(/[^/]+$/, "");
             if (src.endsWith(".m3u8")) {
-                const response=await axios.get(src);
-                let playlist=response.data;
-                const lines=playlist.split("\n");
-                const processed=lines.map(line => {
+                const response = await axios.get(src);
+                let playlist = response.data;
+                const lines = playlist.split("\n");
+                const processed = lines.map(line => {
                     if (
-                        line.trim()===""||
+                        line.trim() === "" ||
                         line.startsWith("#")
                     ) return line;
-                    const absolute=new URL(line, basePath).href;
+                    const absolute = new URL(line, basePath).href;
                     return absolute;
                 });
 
@@ -28,14 +28,14 @@ module.exports={
                 );
                 return res.send(processed.join("\n"));
             } else if (src.endsWith(".mpd")) {
-                const response=await axios.get(src);
-                let mpd=response.data;
-                mpd=mpd.replace(
+                const response = await axios.get(src);
+                let mpd = response.data;
+                mpd = mpd.replace(
                     /(initialization|media)="([^"]+)"/g,
                     (match, attr, value) => {
                         if (value.startsWith("http")) return match;
 
-                        const absolute=new URL(value, basePath).href;
+                        const absolute = new URL(value, basePath).href;
                         return `${attr}="${absolute}"`;
                     }
                 );
@@ -44,21 +44,25 @@ module.exports={
                     "Content-Type",
                     "application/dash+xml"
                 );
+                res.setHeader(
+                    "Content-Security-Policy",
+                    "default-src 'self' blob: data:; media-src * blob: data:;"
+                );
 
                 return res.send(mpd);
             }
-            const stream=await axios.get(src, {
+            const stream = await axios.get(src, {
                 responseType: "stream"
             });
 
             res.setHeader(
                 "Content-Type",
-                stream.headers["content-type"]||"application/octet-stream"
+                stream.headers["content-type"] || "application/octet-stream"
             );
             stream.data.pipe(res);
         } catch (err) {
             console.error(err.message);
-            res.status(500).send("Stream error : "+err.message);
+            res.status(500).send("Stream error : " + err.message);
         }
     }
 }
