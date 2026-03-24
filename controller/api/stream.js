@@ -27,6 +27,25 @@ module.exports={
                     "application/vnd.apple.mpegurl"
                 );
                 return res.send(processed.join("\n"));
+            } else if (src.endsWith(".mpd")) {
+                const response=await axios.get(src);
+                let mpd=response.data;
+                mpd=mpd.replace(
+                    /(initialization|media)="([^"]+)"/g,
+                    (match, attr, value) => {
+                        if (value.startsWith("http")) return match;
+
+                        const absolute=new URL(value, basePath).href;
+                        return `${attr}="${absolute}"`;
+                    }
+                );
+
+                res.setHeader(
+                    "Content-Type",
+                    "application/dash+xml"
+                );
+
+                return res.send(mpd);
             }
             const stream=await axios.get(src, {
                 responseType: "stream"

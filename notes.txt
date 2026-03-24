@@ -1,0 +1,2 @@
+run localhost : npm run dev
+deploy : npm run deploy --message=""
